@@ -15,7 +15,7 @@ See the diagram below for a summary of the network architecture.
 
 ## Downloading the pretrained models
 
-Download the pretrained models [here](https://www.dropbox.com/s/oq0woy3cmf5s8y7/models.zip?dl=1).
+Download the pretrained models [here](https://mega.nz/#!sEw2xCqI!FPpSJROvXHi39qq1l4gzoeaPGO4lALAvVuFmnmFLrVw).
 Unzip the archive into the ``checkpoints`` subfolder in this repository, so that you have one subfolder for each model (e.g. ``REPO/checkpoints/baseline_stereo``)
 
 ## Run pretrained models
