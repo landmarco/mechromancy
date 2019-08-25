@@ -1,3 +1,43 @@
+# Mechromancy
+
+This project accompanies the Mechromancy music summoning process. Two separate algorithms are used - a Wave-U-Net implementation is used to separate vocals from a mixed track and then a SampleRNN implementation is used to generate music derivative of a desired vocal or music style.
+
+# Wave-U-Net
+
+## What is the Wave-U-Net?
+The Wave-U-Net is a convolutional neural network applicable to audio source separation tasks, which works directly on the raw audio waveform, presented in [this paper](https://arxiv.org/abs/1806.03185).
+
+The Wave-U-Net is an adaptation of the U-Net architecture to the one-dimensional time domain to perform end-to-end audio source separation. Through a series of downsampling and upsampling blocks, which involve 1D convolutions combined with a down-/upsampling process, features are computed on multiple scales/levels of abstraction and time resolution, and combined to make a prediction.
+
+See the diagram below for a summary of the network architecture.
+
+<img src="./waveunet.png" width="500">
+
+## Downloading the pretrained models
+
+Download the pretrained models [here](https://www.dropbox.com/s/oq0woy3cmf5s8y7/models.zip?dl=1).
+Unzip the archive into the ``checkpoints`` subfolder in this repository, so that you have one subfolder for each model (e.g. ``REPO/checkpoints/baseline_stereo``)
+
+## Run pretrained models
+
+For a quick demo on an example song with the pre-trained best vocal separation model (M5-HighSR), one can simply execute
+
+`` python Predict.py with cfg.full_44KHz ``
+
+to separate the song "Mallory" included in this repository's ``audio_examples`` subfolder into vocals and accompaniment. The output will be saved next to the input file.
+
+To apply the pretrained model to any song, simply point to its audio file path using the ``input_path`` parameter:
+
+`` python Predict.py with cfg.full_44KHz input_path="/mnt/medien/Daniel/Music/Dark Passion Play/Nightwish - Bye Bye Beautiful.mp3"``
+
+If you want to save the predictions to a custom folder instead of where the input song is, just add the ``output_path`` parameter:
+
+`` python Predict.py with cfg.full_44KHz input_path="/mnt/medien/Daniel/Music/Dark Passion Play/Nightwish - Bye Bye Beautiful.mp3" output_path="/home/daniel" ``
+
+If you want to use other pre-trained models provided (such as the multi-instrument separator), point to the location of the Tensorflow checkpoint file using the ``model_path`` parameter, making sure that the model configuration (here: ``full_multi_instrument``) matches with the model saved in the checkpoint. As an example for the pre-packaged multi-instrument model:
+
+`` python Predict.py with cfg.full_multi_instrument model_path="checkpoints/full_multi_instrument/full_multi_instrument-134067" input_path="/mnt/medien/Daniel/Music/Dark Passion Play/Nightwish - Bye Bye Beautiful.mp3" output_path="/home/daniel" ``
+
 # Dadabots SampleRNN 
 ## Generating Metal, Rock, Punk, Beatbox
 
@@ -224,13 +264,13 @@ At this point, we suggest human curation. Listen through the generated audio, fi
 
 
 ## Reference
-If you are using this code, please cite our paper:  
+Many thanks to CJ Carr and Zack Zukowski for their work on Dadabots which inspired this project. Thanks to Soroush Mehri, Kundan Kumar, Ishaan Gulrajani, Rithesh Kumar, Shubham Jain, Jose Sotelo, Aaron Courville, and Yoshua Bengio for their work on the SampleRNN implementation, and to Daniel Stoller, Sebastian Ewert, and Simon Dixon for their work on Wave-U-Net. Their papers are cited below:  
 
 Generating Albums with SampleRNN to Imitate Metal, Rock, and Punk Bands. CJ Carr, Zack Zukowski (MUME 2018).
 
-And the original paper:
-
 SampleRNN: An Unconditional End-to-End Neural Audio Generation Model. Soroush Mehri, Kundan Kumar, Ishaan Gulrajani, Rithesh Kumar, Shubham Jain, Jose Sotelo, Aaron Courville, Yoshua Bengio, 5th International Conference on Learning Representations (ICLR 2017).
+
+Wave-U-Net: A Multi-Scale Neural Network for End-to-End Audio Source Separation. Daniel Stoller, Sebastian Ewert, Simon Dixon (SiSec 2018).
 
 ## License
 
