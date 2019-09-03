@@ -2,6 +2,8 @@
 
 This project accompanies the Mechromancy music summoning process. Two separate algorithms are used - a Wave-U-Net implementation is used to separate vocals from a mixed track and then a SampleRNN implementation is used to generate music derivative of a desired vocal or music style.
 
+Samples of what this generated audio sounds like can be found in the samples folder.
+
 # Wave-U-Net
 
 ## What is the Wave-U-Net?
@@ -41,15 +43,13 @@ If you want to use other pre-trained models provided (such as the multi-instrume
 # Dadabots SampleRNN 
 ## Generating Metal, Rock, Punk, Beatbox
 
-Code accompanying the NIPS 2017 paper [Generating Black Metal and Math Rock: Beyond
+Much of this code accompanies the NIPS 2017 paper [Generating Black Metal and Math Rock: Beyond
 Bach, Beethoven, and Beatles](http://dadabots.com/nips2017/generating-black-metal-and-math-rock.pdf) and MUME 2018 paper [Generating Albums with SampleRNN to Imitate Metal, Rock, and Punk Bands](http://musicalmetacreation.org/buddydrive/file/carr/)
 
-We modified a SampleRNN architecture to generate music in modern genres such as black metal, math rock, skate punk, beatbox, etc
+Dadabots has modified a SampleRNN architecture to generate music in modern genres such as black metal, math rock, skate punk, beatbox, etc.
 
 This early example of neural synthesis is a proof-of-concept for how machine learning can drive new types of music software. Creating music can be as simple as specifying a set of music influences on which a model trains. We demonstrate a method for generating albums that imitate bands in experimental music genres previously unrealized by traditional synthesis techniques
 (e.g. additive, subtractive, FM, granular, concatenative). Unlike MIDI and symbolic models, SampleRNN generates raw audio in the time domain. This requirement becomes increasingly important in modern music styles where timbre and space are used compositionally. Long developmental compositions with rapid transitions between sections are possible by increasing the depth of the network beyond the number used for speech datasets. We are delighted by the unique characteristic artifacts of neural synthesis.
-
-We've created[ several albums](https://dadabots.bandcamp.com/) this way. Read our papers for more expalnation of how we use this as part of a creative workflow, how to choose good datasets, etc. 
 
 Dadabots is CJ Carr [[github]](https://github.com/Cortexelus) [[website]](http://cortexel.us) and Zack Zukowski [[github]](https://github.com/ZVK) [[website]](http://zackzukowski.com/) 
 
@@ -106,13 +106,13 @@ then run the new experiment python script located in the datasets/music director
 16k sample rate: 
 ```
 cd datasets/music/
-sudo python new_experiment16k.py krallice downloads/
+sudo python new_experiment16k.py jeromes downloads/
 ```
 
 32k sample rate: 
 ```
 cd datasets/music/
-sudo python new_experiment32k.py krallice downloads/
+sudo python new_experiment32k.py jeromes downloads/
 ```
 
 ## Training
@@ -121,7 +121,7 @@ To train a model on an existing dataset with accelerated GPU processing, you nee
 Mission control center:
 ```
 $ pwd
-/root/cj/https://github.com/Cortexelus/dadabots_sampleRNN
+/home/ubuntu/https://github.com/landmarco/mechromancy
 ```
 
 ### Training SampleRNN (2-tier)
@@ -179,89 +179,31 @@ If you're using cuda8 with K80 gpus or earlier, you may need "device=gpu0" inste
 If you have 8 GPUs, you can run up to 8 experiments in parallel, by setting device to cuda0, cuda1, cuda2, cuda3... cuda7
 
 
-#### Our best hyperparameters
+#### Best hyperparameters
 
-After training 100s of models with different hyperparameters, these were our best hyperparameters (at the limits of the V100 hardware) for the kind of music we wanted to generate. Further explanation for our choices can be found in our papers.
-
-
-```THEANO_FLAGS=mode=FAST_RUN,device=cuda0,floatX=float32 python -u models/two_tier/two_tier16k.py --exp krallice_experiment --n_frames 64 --frame_size 16 --emb_size 256 --skip_conn True --dim 1024 --n_rnn 5 --rnn_type LSTM --q_levels 256 --q_type mu-law --batch_size 128 --weight_norm True --learn_h0 False --which_set krallice
-```
+Here are the hyperparameters I used for training on Jeromes Dream, and would applicable for most forms of extreme music.
 
 
-### Training SampleRNN (3-tier)
-
-There's also a 3-tier option, but we initially had better results with 2-tier, so we don't use 3-tier. It doesn't have the modifications we made to 2-tier. 
-
-```
-$ python models/three_tier/three_tier.py -h
-usage: three_tier16k.py [-h] [--exp EXP] --seq_len SEQ_LEN --big_frame_size
-                     BIG_FRAME_SIZE --frame_size FRAME_SIZE --weight_norm
-                     WEIGHT_NORM --emb_size EMB_SIZE --skip_conn SKIP_CONN
-                     --dim DIM --n_rnn {1,2,3,4,5} --rnn_type {LSTM,GRU}
-                     --learn_h0 LEARN_H0 --q_levels Q_LEVELS --q_type
-                     {linear,a-law,mu-law} --which_set {ONOM,BLIZZ,MUSIC}
-                     --batch_size {64,128,256} [--debug] [--resume]
-
-three_tier.py No default value! Indicate every argument.
-
-optional arguments:
-  -h, --help            show this help message and exit
-  --exp EXP             Experiment name
-  --seq_len SEQ_LEN     How many samples to include in each Truncated BPTT
-                        pass
-  --big_frame_size BIG_FRAME_SIZE
-                        How many samples per big frame in tier 3
-  --frame_size FRAME_SIZE
-                        How many samples per frame in tier 2
-  --weight_norm WEIGHT_NORM
-                        Adding learnable weight normalization to all the
-                        linear layers (except for the embedding layer)
-  --emb_size EMB_SIZE   Size of embedding layer (> 0)
-  --skip_conn SKIP_CONN
-                        Add skip connections to RNN
-  --dim DIM             Dimension of RNN and MLPs
-  --n_rnn {1,2,3,4,5}   Number of layers in the stacked RNN
-  --rnn_type {LSTM,GRU}
-                        GRU or LSTM
-  --learn_h0 LEARN_H0   Whether to learn the initial state of RNN
-  --q_levels Q_LEVELS   Number of bins for quantization of audio samples.
-                        Should be 256 for mu-law.
-  --q_type {linear,a-law,mu-law}
-                        Quantization in linear-scale, a-law-companding, or mu-
-                        law compandig. With mu-/a-law quantization level shoud
-                        be set as 256
-  --which_set WHICH_SET
-                        any preprocessed set in the datasets/music/ directory
-  --batch_size {64,128,256}
-                        size of mini-batch
-  --debug               Debug mode
-  --resume              Resume the same model from the last checkpoint. Order
-                        of params are important. [for now]
-```
-To run:
-```
-$ THEANO_FLAGS=mode=FAST_RUN,device=cuda0,floatX=float32 python -u models/three_tier/three_tier.py --exp 3TIER --seq_len 512 --big_frame_size 8 --frame_size 2 --emb_size 256 --skip_conn False --dim 1024 --n_rnn 1 --rnn_type GRU --q_levels 256 --q_type linear --batch_size 128 --weight_norm True --learn_h0 True --which_set MUSIC
-
+```THEANO_FLAGS=mode=FAST_RUN,device=cuda0,floatX=float32 python -u models/two_tier/two_tier16k.py --exp i_dream_of_jeromes_dream --n_frames 64 --frame_size 16 --emb_size 256 --skip_conn True --dim 1024 --n_rnn 5 --rnn_type LSTM --q_levels 256 --q_type mu-law --batch_size 128 --weight_norm True --learn_h0 False --which_set i_dream_of_jeromes_dream
 ```
 
 ## Generating
 
 Generate 100 songs (4 minutes each) from a trained 32k model:
 ```
-$ THEANO_FLAGS=mode=FAST_RUN,device=gpu0,floatX=float32 python -u models/two_tier/two_tier_generate32k.py --exp krallice_experiment --n_frames 64 --frame_size 16 --emb_size 256 --skip_conn True --dim 1024 --n_rnn 5 --rnn_type LSTM --q_levels 256 --q_type mu-law --batch_size 128 --weight_norm True --learn_h0 False --which_set krallice --n_secs 240 --n_seqs 100
+$ THEANO_FLAGS=mode=FAST_RUN,device=gpu0,floatX=float32 python -u models/two_tier/two_tier_generate32k.py --exp i_dream_of_jeromes_dream_experiment --n_frames 64 --frame_size 16 --emb_size 256 --skip_conn True --dim 1024 --n_rnn 5 --rnn_type LSTM --q_levels 256 --q_type mu-law --batch_size 128 --weight_norm True --learn_h0 False --which_set i_dream_of_jeromes_dream --n_secs 240 --n_seqs 100
 ```
 
 All the parameters have to be the same as when you trained it. Notice we're calling `two_tier_generate32k.py` with two new flags `--n_secs` and `--n_seqs` 
 
 It will take just as much time to generate 100 songs as 5, because they are created in parallel (up to a hardware memory limit). 
 
-This will generate from the latest checkpoint. However, we found the latest checkpoint does not always create the best music. Instead we listen to the test audio generated at each checkpoint, choose our favorite checkpoint, and delete the newer checkpoints, before generating a huge batch with this script. 
+This will generate from the latest checkpoint. However, often the latest checkpoint does not always create the best music. Instead we listen to the test audio generated at each checkpoint, choose our favorite checkpoint, and delete the newer checkpoints, before generating a huge batch with this script. 
 
 
-## Creative Workflow
+## The Summoning
 
-At this point, we suggest human curation. Listen through the generated audio, find the best parts, and use them in your music. Read our [MUME 2018 paper](http://musicalmetacreation.org/buddydrive/file/carr/) to see how our workflow changed over the course of six albums. 
-
+The suggested workflow is to for human curation, sorting through the generated audio and selecting striking parts and assembling them together, like organizing a playlist.
 
 ## Reference
 Many thanks to CJ Carr and Zack Zukowski for their work on Dadabots which inspired this project. Thanks to Soroush Mehri, Kundan Kumar, Ishaan Gulrajani, Rithesh Kumar, Shubham Jain, Jose Sotelo, Aaron Courville, and Yoshua Bengio for their work on the SampleRNN implementation, and to Daniel Stoller, Sebastian Ewert, and Simon Dixon for their work on Wave-U-Net. Their papers are cited below:  
