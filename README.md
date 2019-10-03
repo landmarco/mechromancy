@@ -46,12 +46,8 @@ If you want to use other pre-trained models provided (such as the multi-instrume
 Much of this code accompanies the NIPS 2017 paper [Generating Black Metal and Math Rock: Beyond
 Bach, Beethoven, and Beatles](http://dadabots.com/nips2017/generating-black-metal-and-math-rock.pdf) and MUME 2018 paper [Generating Albums with SampleRNN to Imitate Metal, Rock, and Punk Bands](http://musicalmetacreation.org/buddydrive/file/carr/)
 
-Dadabots has modified a SampleRNN architecture to generate music in modern genres such as black metal, math rock, skate punk, beatbox, etc.
-
 This early example of neural synthesis is a proof-of-concept for how machine learning can drive new types of music software. Creating music can be as simple as specifying a set of music influences on which a model trains. We demonstrate a method for generating albums that imitate bands in experimental music genres previously unrealized by traditional synthesis techniques
 (e.g. additive, subtractive, FM, granular, concatenative). Unlike MIDI and symbolic models, SampleRNN generates raw audio in the time domain. This requirement becomes increasingly important in modern music styles where timbre and space are used compositionally. Long developmental compositions with rapid transitions between sections are possible by increasing the depth of the network beyond the number used for speech datasets. We are delighted by the unique characteristic artifacts of neural synthesis.
-
-Dadabots is CJ Carr [[github]](https://github.com/Cortexelus) [[website]](http://cortexel.us) and Zack Zukowski [[github]](https://github.com/ZVK) [[website]](http://zackzukowski.com/) 
 
 # SampleRNN (Dadabots fork)
 
@@ -206,7 +202,7 @@ This will generate from the latest checkpoint. However, often the latest checkpo
 The suggested workflow is to for human curation, sorting through the generated audio and selecting striking parts and assembling them together, like organizing a playlist.
 
 ## Reference
-Many thanks to CJ Carr and Zack Zukowski for their work on Dadabots which inspired this project. Thanks to Soroush Mehri, Kundan Kumar, Ishaan Gulrajani, Rithesh Kumar, Shubham Jain, Jose Sotelo, Aaron Courville, and Yoshua Bengio for their work on the SampleRNN implementation, and to Daniel Stoller, Sebastian Ewert, and Simon Dixon for their work on Wave-U-Net. Their papers are cited below:  
+Many thanks to CJ Carr [[github]](https://github.com/Cortexelus) [[website]](http://cortexel.us) and Zack Zukowski [[github]](https://github.com/ZVK) [[website]](http://zackzukowski.com/) for their work on Dadabots which inspired this project. Thanks to Soroush Mehri, Kundan Kumar, Ishaan Gulrajani, Rithesh Kumar, Shubham Jain, Jose Sotelo, Aaron Courville, and Yoshua Bengio for their work on the SampleRNN implementation, and to Daniel Stoller, Sebastian Ewert, and Simon Dixon for their work on Wave-U-Net. Their papers are cited below:  
 
 Generating Albums with SampleRNN to Imitate Metal, Rock, and Punk Bands. CJ Carr, Zack Zukowski (MUME 2018).
 
