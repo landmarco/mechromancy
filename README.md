@@ -30,15 +30,15 @@ to separate the song "Mallory" included in this repository's ``Wave-U-Net/audio_
 
 To apply the pretrained model to any song, simply point to its audio file path using the ``input_path`` parameter:
 
-`` python Predict.py with cfg.full_44KHz input_path="~/mechromancy/Wave-U-Net/audio_examples/Jimmy Carter Says YES - Gene Marshall.mp3"``
+`` python Predict.py with cfg.full_44KHz input_path="/Users/marco/mechromancy/Wave-U-Net/audio_examples/Jimmy Carter Says YES - Gene Marshall.mp3"``
 
 If you want to save the predictions to a custom folder instead of where the input song is, just add the ``output_path`` parameter:
 
-`` python Predict.py with cfg.full_44KHz input_path="~/mechromancy/Wave-U-Net/audio_examples/Jimmy Carter Says YES - Gene Marshall.mp3" output_path="/home/splits" ``
+`` python Predict.py with cfg.full_44KHz input_path="/Users/marco/mechromancy/Wave-U-Net/audio_examples/Jimmy Carter Says YES - Gene Marshall.mp3" output_path="/home/splits" ``
 
 If you want to use other pre-trained models provided (such as the multi-instrument separator), point to the location of the Tensorflow checkpoint file using the ``model_path`` parameter, making sure that the model configuration (here: ``full_multi_instrument``) matches with the model saved in the checkpoint. As an example for the pre-packaged multi-instrument model:
 
-`` python Predict.py with cfg.full_multi_instrument model_path="checkpoints/full_multi_instrument/full_multi_instrument-134067" input_path="~/mechromancy/Wave-U-Net/audio_examples/Jimmy Carter Says YES - Gene Marshall.mp3" output_path="/home/splits" ``
+`` python Predict.py with cfg.full_multi_instrument model_path="checkpoints/full_multi_instrument/full_multi_instrument-134067" input_path="/Users/marco/mechromancy/Wave-U-Net/audio_examples/Jimmy Carter Says YES - Gene Marshall.mp3" output_path="/home/splits" ``
 
 # Dadabots SampleRNN 
 ## Generating Metal, Rock, Punk, Beatbox
