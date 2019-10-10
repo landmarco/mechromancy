@@ -18,7 +18,7 @@ See the diagram below for a summary of the network architecture.
 ## Downloading the pretrained models
 
 Download the pretrained models [here](https://mega.nz/#!sEw2xCqI!FPpSJROvXHi39qq1l4gzoeaPGO4lALAvVuFmnmFLrVw).
-Unzip the archive into the ``checkpoints`` subfolder in this repository, so that you have one subfolder for each model (e.g. ``REPO/checkpoints/baseline_stereo``)
+Unzip the archive into the ``Wave-U-Net/checkpoints`` subfolder in this repository, so that you have one subfolder for each model (e.g. ``REPO/Wave-U-Net/checkpoints/baseline_stereo``)
 
 ## Run pretrained models
 
