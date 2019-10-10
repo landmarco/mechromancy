@@ -179,8 +179,8 @@ If you have 8 GPUs, you can run up to 8 experiments in parallel, by setting devi
 
 Here are the hyperparameters I used for training on Jeromes Dream, and would applicable for most forms of extreme music.
 
-
-```THEANO_FLAGS=mode=FAST_RUN,device=cuda0,floatX=float32 python -u models/two_tier/two_tier16k.py --exp i_dream_of_jeromes_dream --n_frames 64 --frame_size 16 --emb_size 256 --skip_conn True --dim 1024 --n_rnn 5 --rnn_type LSTM --q_levels 256 --q_type mu-law --batch_size 128 --weight_norm True --learn_h0 False --which_set i_dream_of_jeromes_dream
+```
+THEANO_FLAGS=mode=FAST_RUN,device=cuda0,floatX=float32 python -u models/two_tier/two_tier16k.py --exp i_dream_of_jeromes_dream --n_frames 64 --frame_size 16 --emb_size 256 --skip_conn True --dim 1024 --n_rnn 5 --rnn_type LSTM --q_levels 256 --q_type mu-law --batch_size 128 --weight_norm True --learn_h0 False --which_set i_dream_of_jeromes_dream
 ```
 
 ## Generating
